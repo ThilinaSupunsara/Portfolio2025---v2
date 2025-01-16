@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MYD80 Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.0/gsap.min.js">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      
+    }
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .nav-item {
+      font-size: 18px;
+      margin: 0 15px;
+      transition: all 0.3s ease;
+    }
+    .nav-item:hover {
+      color: #007BFF;
+      transform: scale(1.1);
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1642160428828-334bf07023ec?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    .hero .btn {
+      margin: 0 15px;
+      padding: 10px 30px;
+      font-size: 1.1rem;
+      border-radius: 25px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .hero .btn:hover {
+      transform: scale(1.1);
+      background-color: #007bff;
+    }
+/* General Section Styling */
+#bulletin-board {
+  padding: 60px 0;
+  background-color: #f8f9fa; /* Light background for the section */
+}
+
+/* Card Styling */
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Slight hover effect to lift the card */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px 5px 0 0;
+}
+
+/* Column Layout */
+@media (max-width: 767px) {
+  .col-md-6 {
+    margin-bottom: 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  .col-lg-4 {
+    margin-bottom: 30px;
+  }
+}
+
+/* Section Header */
+#bulletin-board h2 {
+  font-size: 2.5rem;
+  color: #212529;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* General Section Styling */
+#compliance-toolkit {
+  background-color: #ffffff;
+  padding: 60px 15px;
+  
+}
+
+#compliance-toolkit h2 {
+  font-size: 2.5rem;
+  color: #212529;
+  margin-bottom: 50px;
+}
+
+/* Toolkit Item Styling */
+.toolkit-item {
+  background-color: #f5f3f3;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.toolkit-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.toolkit-item .icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.toolkit-item .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.toolkit-item .description {
+  font-size: 1rem;
+  color: #555;
+}
+
+@media (max-width: 767px) {
+  .toolkit-item {
+    text-align: center;
+    padding: 15px;
+  }
+
+  .toolkit-item .icon {
+    margin-bottom: 10px;
+  }
+}
+/* General Section Styling */
+#my-account {
+  background-color: #f9f9f9;
+  padding: 60px 15px;
+}
+
+#my-account h2 {
+  font-size: 2.5rem;
+  color: #212529;
+}
+
+#my-account p.text-muted {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+/* Account Feature Styling */
+.account-feature {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.account-feature:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+.account-feature .icon img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.account-feature h5 {
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.account-feature p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+.account-feature button {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* General Styling */
+#legal-info {
+
+  padding: 60px 15px;
+}
+
+#legal-info h2 {
+  font-size: 2.5rem;
+  color: #212529;
+}
+
+#legal-info p.text-muted {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+/* Legal Item Styling */
+.legal-item {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.legal-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.legal-item h5 {
+  font-size: 1.25rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.legal-item p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.legal-item .btn-link {
+  color: #007bff;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.legal-item .btn-link:hover {
+  text-decoration: underline;
+}
+
+/* Footer Styling */
+#footer {
+  background-color: #212529;
+  color: #f8f9fa;
+  padding: 60px 15px;
+}
+
+#footer h5 {
+  font-size: 1.25rem;
+  color: #f8f9fa;
+  margin-bottom: 15px;
+}
+
+#footer p {
+  font-size: 0.95rem;
+  color: #adb5bd;
+}
+
+#footer ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+#footer ul li {
+  margin-bottom: 10px;
+}
+
+#footer a {
+  color: #f8f9fa;
+  text-decoration: none;
+}
+
+#footer a:hover {
+  color: #00aaff;
+  text-decoration: underline;
+}
+
+/* Social Icons Styling */
+.social-icons a {
+  font-size: 1.25rem;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #00aaff;
+}
+
+hr {
+  border-top: 1px solid #495057;
+}
+/* Card hover effect */
+#bulletin-board .card {
+  transition: transform 0.8s ease, box-shadow 0.8s ease;
+}
+
+#bulletin-board .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Initial state for scroll-in animation */
+#bulletin-board .card {
+  opacity: 0;
+  transform: translateY(20px);
+}
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header>
+    <nav class="sticky-nav navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand logo" href="#">MYD80</a>
+        <!-- Navbar Toggle Button (for mobile view) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#bulletin-board">Bulletin Board</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#compliance-toolkit">Compliance Toolkit</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#my-account">My Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#legal-info">Legal Information</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to MYD80</h1>
+      <p>Your trusted partner in compliance and financial solutions.</p>
+      <div class="cta-buttons">
+        <a href="#bulletin-board" class="btn btn-primary">Explore Bulletin Board</a>
+        <a href="#compliance-toolkit" class="btn btn-outline-light">Compliance Toolkit</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bulletin Board Section -->
+<section id="bulletin-board" class="section bg-light">
+    <div class="container">
+      <h2 class="text-center mb-4">Bulletin Board</h2>
+      <div class="row">
+        <!-- Bulletin Item 1 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="M Test">
+            <div class="card-body">
+              <h5 class="card-title">M Test</h5>
+              <p class="card-text">Details about the M Test bulletin item. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 2 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="N Test">
+            <div class="card-body">
+              <h5 class="card-title">N Test</h5>
+              <p class="card-text">Details about the N Test bulletin item. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 3 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="A Bulletin Board 1">
+            <div class="card-body">
+              <h5 class="card-title">A Bulletin Board 1</h5>
+              <p class="card-text">Details about the A Bulletin Board 1 item. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 4 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="ACTR Special District Taxonomies Report">
+            <div class="card-body">
+              <h5 class="card-title">ACTR Special District Taxonomies Report</h5>
+              <p class="card-text">Details about the ACTR Special District Taxonomies Report. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 5 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="Kutak Rock Client Alert">
+            <div class="card-body">
+              <h5 class="card-title">Kutak Rock Client Alert</h5>
+              <p class="card-text">Details about the Kutak Rock Client Alert. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 6 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="SEC Action on Disclosure">
+            <div class="card-body">
+              <h5 class="card-title">SEC Action on Disclosure</h5>
+              <p class="card-text">Details about the SEC action on Disclosure. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 7 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="NFMA White Paper on CYBER Event Disclosures">
+            <div class="card-body">
+              <h5 class="card-title">NFMA White Paper on CYBER Event Disclosures</h5>
+              <p class="card-text">Details about the NFMA white paper on CYBER event disclosures. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 8 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="Thoughts and Considerations in the Time of COVID-19">
+            <div class="card-body">
+              <h5 class="card-title">Thoughts and Considerations in the Time of COVID-19</h5>
+              <p class="card-text">Details about thoughts and considerations during COVID-19. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 9 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="Voluntary Disclosure Template with Disclaimer Language">
+            <div class="card-body">
+              <h5 class="card-title">Voluntary Disclosure Template with Disclaimer Language</h5>
+              <p class="card-text">Details about the voluntary disclosure template. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 10 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="The Importance of Disclosure for our Municipal Markets">
+            <div class="card-body">
+              <h5 class="card-title">The Importance of Disclosure for our Municipal Markets</h5>
+              <p class="card-text">Details about the importance of disclosure for municipal markets. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 11 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="GASB Proposes to Postpone Effective Dates of Certain Pronouncements">
+            <div class="card-body">
+              <h5 class="card-title">GASB Proposes to Postpone Effective Dates of Certain Pronouncements</h5>
+              <p class="card-text">Details about GASB's proposal to postpone effective dates. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 12 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="COVID-19 Illustrative Disclosures">
+            <div class="card-body">
+              <h5 class="card-title">COVID-19 Illustrative Disclosures</h5>
+              <p class="card-text">Details about COVID-19 illustrative disclosures. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 13 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="SEC Staff Guidance Regarding Secondary Market Disclosure">
+            <div class="card-body">
+              <h5 class="card-title">SEC Staff Guidance Regarding Secondary Market Disclosure</h5>
+              <p class="card-text">Details about SEC staff guidance on secondary market disclosure. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 14 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="SEC to Municipal Issuers and Obligated Persons Alert">
+            <div class="card-body">
+              <h5 class="card-title">SEC to Municipal Issuers and Obligated Persons Alert</h5>
+              <p class="card-text">Details about the SEC alert to municipal issuers and obligated persons. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 15 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="Application of Antifraud Provisions to Public Statements of Issuers and Obligated Persons of Municipal Securities in the Secondary Market">
+            <div class="card-body">
+              <h5 class="card-title">Application of Antifraud Provisions to Public Statements of Issuers and Obligated Persons of Municipal Securities in the Secondary Market</h5>
+              <p class="card-text">Details about the application of antifraud provisions. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 16 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="SEC Proposes New Guidance on Role of Municipal Advisers in Private Placements">
+            <div class="card-body">
+              <h5 class="card-title">SEC Proposes New Guidance on Role of Municipal Advisers in Private Placements</h5>
+              <p class="card-text">Details about the SEC's proposed guidance on municipal advisers. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Bulletin Item 17 -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="GREEN BONDS">
+            <div class="card-body">
+              <h5 class="card-title">GREEN BONDS</h5>
+              <p class="card-text">Details about green bonds. This could be a detailed description or a brief overview of the item.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="compliance-toolkit" class="container py-5">
+    <h2 class="text-center mb-5">Compliance Toolkit</h2>
+    
+    <div class="toolkit-items row">
+      <div class="col-md-6 mb-4">
+        <div class="toolkit-item d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 1">
+          </div>
+          <div>
+            <h5 class="title">View Compliance Toolkit</h5>
+            <p class="description">Access the complete compliance toolkit for your needs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="toolkit-item d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 2">
+          </div>
+          <div>
+            <h5 class="title">View My Account</h5>
+            <p class="description">Manage your account settings and preferences.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="toolkit-item d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 3">
+          </div>
+          <div>
+            <h5 class="title">File a Document</h5>
+            <p class="description">Submit and manage your documents securely.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="toolkit-item d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 4">
+          </div>
+          <div>
+            <h5 class="title">View Document History</h5>
+            <p class="description">Track and review your document submission history.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="toolkit-item d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 5">
+          </div>
+          <div>
+            <h5 class="title">View Policies & Procedures</h5>
+            <p class="description">Access and review company policies and procedures.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="toolkit-item d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 6">
+          </div>
+          <div>
+            <h5 class="title">Continuing Education</h5>
+            <p class="description">Explore continuing education resources and courses.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="toolkit-item d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 7">
+          </div>
+          <div>
+            <h5 class="title">Search System</h5>
+            <p class="description">Search the system for documents, policies, and more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="my-account" class="container py-5">
+    <div class="text-center mb-5">
+      <h2>Manage Your Account</h2>
+      <p class="text-muted">Take control of your account settings, preferences, and activities.</p>
+    </div>
+    
+    <div class="account-actions row gy-5">
+      <div class="col-md-6">
+        <div class="account-feature d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Profile Icon">
+          </div>
+          <div>
+            <h5>Profile Information</h5>
+            <p class="text-muted">Keep your personal information up to date.</p>
+            <button class="btn btn-outline-primary btn-sm">Edit Profile</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="account-feature d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Password Icon">
+          </div>
+          <div>
+            <h5>Change Password</h5>
+            <p class="text-muted">Secure your account with a strong password.</p>
+            <button class="btn btn-outline-primary btn-sm">Update Password</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="account-feature d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Notification Icon">
+          </div>
+          <div>
+            <h5>Notification Preferences</h5>
+            <p class="text-muted">Customize how you receive updates and alerts.</p>
+            <button class="btn btn-outline-primary btn-sm">Manage Notifications</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="account-feature d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Billing Icon">
+          </div>
+          <div>
+            <h5>Billing & Subscriptions</h5>
+            <p class="text-muted">Access and update your billing details.</p>
+            <button class="btn btn-outline-primary btn-sm">Update Billing</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="account-feature d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="History Icon">
+          </div>
+          <div>
+            <h5>Document History</h5>
+            <p class="text-muted">Review your activity and submission history.</p>
+            <button class="btn btn-outline-primary btn-sm">View History</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="account-feature d-flex align-items-center">
+          <div class="icon me-4">
+            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Security Icon">
+          </div>
+          <div>
+            <h5>Security Settings</h5>
+            <p class="text-muted">Enhance your account’s security features.</p>
+            <button class="btn btn-outline-primary btn-sm">Update Security</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="legal-info" class="container py-5">
+    <div class="text-center mb-5">
+      <h2>Legal Information</h2>
+      <p class="text-muted">Learn about our policies, terms, and legal commitments.</p>
+    </div>
+  
+    <div class="legal-items row gy-4">
+      <div class="col-md-6">
+        <div class="legal-item p-4">
+          <h5>Privacy Policy</h5>
+          <p class="text-muted">Understand how we collect, use, and protect your personal information.</p>
+          <a href="#" class="btn btn-link">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="legal-item p-4">
+          <h5>Terms of Service</h5>
+          <p class="text-muted">Review the terms and conditions for using our services.</p>
+          <a href="#" class="btn btn-link">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="legal-item p-4">
+          <h5>Cookie Policy</h5>
+          <p class="text-muted">Learn how we use cookies to enhance your browsing experience.</p>
+          <a href="#" class="btn btn-link">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="legal-item p-4">
+          <h5>Disclaimer</h5>
+          <p class="text-muted">Understand our disclaimer regarding the use of our services.</p>
+          <a href="#" class="btn btn-link">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="legal-item p-4">
+          <h5>Data Protection</h5>
+          <p class="text-muted">Find out about our data protection practices and policies.</p>
+          <a href="#" class="btn btn-link">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="legal-item p-4">
+          <h5>Compliance</h5>
+          <p class="text-muted">Learn about our approach to legal compliance and regulations.</p>
+          <a href="#" class="btn btn-link">Read More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer id="footer" class="bg-dark text-light py-5">
+    <div class="container">
+      <div class="row gy-4">
+        <!-- About Us Section -->
+        <div class="col-md-4">
+          <h5>About Us</h5>
+          <p class="text-muted">
+            We provide top-notch compliance and financial solutions tailored to your needs.
+          </p>
+        </div>
+  
+        <!-- Quick Links Section -->
+        <div class="col-md-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Bulletin Board</a></li>
+            <li><a href="#" class="text-light text-decoration-none">Compliance Toolkit</a></li>
+            <li><a href="#" class="text-light text-decoration-none">My Account</a></li>
+          </ul>
+        </div>
+  
+        <!-- Contact Section -->
+        <div class="col-md-4">
+          <h5>Contact Us</h5>
+          <ul class="list-unstyled">
+            <li>Email: <a href="mailto:info@myd80.com" class="text-light">info@myd80.com</a></li>
+            <li>Phone: +1 (123) 456-7890</li>
+            <li>Address: 123 Financial St, Suite 456</li>
+          </ul>
+          <div class="social-icons mt-3">
+            <a href="#" class="text-light me-3"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-light"><i class="fab fa-facebook"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="bg-secondary my-4">
+      <div class="text-center">
+        <p class="mb-0">&copy; 2023 MYD80. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Include Bootstrap and GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.0/gsap.min.js"></script>
+  <script>
+    // GSAP Animation for the Header Elements
+    window.addEventListener("load", function() {
+      gsap.from(".logo", { opacity: 0, y: -50, duration: 1 });
+      gsap.from(".nav-item", {
+        opacity: 0,
+        x: -30,
+        stagger: 0.2,
+        duration: 1
+      });
+    });
+  </script>
+  <script>
+    // GSAP Animation for Hero Section Elements
+    window.addEventListener("load", function() {
+      gsap.from(".hero h1", { opacity: 0, y: -50, duration: 1 });
+      gsap.from(".hero p", { opacity: 0, y: 50, duration: 1, delay: 0.5 });
+      gsap.from(".cta-buttons a", {
+        opacity: 0,
+        scale: 0.8,
+        stagger: 0.2,
+        duration: 1,
+        delay: 1
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+  // GSAP Animation for the cards
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animate each card when it comes into view
+  gsap.from(".card", {
+    scrollTrigger: {
+      trigger: ".card",   // Trigger when the card comes into the viewport
+      start: "top 80%",    // When the card's top reaches 80% from the top of the viewport
+      end: "bottom 30%",   // Ends animation when the card's bottom reaches 30% from the top of the viewport
+      scrub: true,         // Makes the animation smooth as you scroll
+      once: true,          // Runs the animation once per card
+    },
+    opacity: 0,           // Start with opacity 0 (invisible)
+    y: 50,                // Start with a vertical offset
+    duration: 1,          // Duration of the animation
+    ease: "power3.out",   // Easing function for smoothness
+  });
+});
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const cards = document.querySelectorAll("#bulletin-board .card");
+
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = "1";
+          entry.target.style.transform = "translateY(0)";
+          observer.unobserve(entry.target); // Stop observing after animation
+        }
+      });
+    },
+    {
+      threshold: 0.2, // Trigger when 20% of the element is visible
+    }
+  );
+
+  cards.forEach((card) => observer.observe(card));
+});
+
+  </script>
+</body>
+</html>

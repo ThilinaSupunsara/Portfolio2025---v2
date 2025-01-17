@@ -11,47 +11,76 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
       
     }
+    @keyframes moveDots {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 20px 20px;
+            }
+        }
     .sticky-nav {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background-color: #fff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      background-color: #1e1e1e;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
     .logo {
       font-size: 24px;
       font-weight: bold;
+      color: #e0e0e0;
     }
     .nav-item {
       font-size: 18px;
       margin: 0 15px;
       transition: all 0.3s ease;
+      color: #ab7676;
     }
     .nav-item:hover {
       color: #007BFF;
       transform: scale(1.1);
     }
     .hero {
-      background: url('https://images.unsplash.com/photo-1642160428828-334bf07023ec?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 30px;
-    }
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  overflow: hidden; /* To ensure content doesn't overflow */
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* Keep content above the Three.js canvas */
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+#three-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Place canvas behind content */
+}
     .hero .btn {
       margin: 0 15px;
       padding: 10px 30px;
@@ -63,327 +92,335 @@
       transform: scale(1.1);
       background-color: #007bff;
     }
-/* General Section Styling */
-#bulletin-board {
-  padding: 60px 0;
-  background-color: #f8f9fa; /* Light background for the section */
-}
+    /* General Section Styling */
+    #bulletin-board {
+      padding: 60px 0;
+      background-color: #1e1e1e;
+    }
 
-/* Card Styling */
-.card {
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    /* Card Styling */
+    .card {
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: #2d2d2d;
+      color: #e0e0e0;
+    }
 
-.card:hover {
-  transform: translateY(-10px); /* Slight hover effect to lift the card */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-}
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    }
 
-.card-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #333;
-}
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #e0e0e0;
+    }
 
-.card-text {
-  font-size: 1rem;
-  color: #555;
-}
+    .card-text {
+      font-size: 1rem;
+      color: #b0b0b0;
+    }
 
-.card-img-top {
-  height: 200px;
-  object-fit: cover;
-  border-radius: 5px 5px 0 0;
-}
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px 5px 0 0;
+    }
 
-/* Column Layout */
-@media (max-width: 767px) {
-  .col-md-6 {
-    margin-bottom: 15px;
-  }
-}
+    /* Column Layout */
+    @media (max-width: 767px) {
+      .col-md-6 {
+        margin-bottom: 15px;
+      }
+    }
 
-@media (min-width: 768px) {
-  .col-lg-4 {
-    margin-bottom: 30px;
-  }
-}
+    @media (min-width: 768px) {
+      .col-lg-4 {
+        margin-bottom: 30px;
+      }
+    }
 
-/* Section Header */
-#bulletin-board h2 {
-  font-size: 2.5rem;
-  color: #212529;
-  text-align: center;
-  margin-bottom: 50px;
-}
+    /* Section Header */
+    #bulletin-board h2 {
+      font-size: 2.5rem;
+      color: #e0e0e0;
+      text-align: center;
+      margin-bottom: 50px;
+    }
 
-.card-body {
-  padding: 20px;
-}
+    .card-body {
+      padding: 20px;
+    }
 
-/* General Section Styling */
-#compliance-toolkit {
-  background-color: #ffffff;
-  padding: 60px 15px;
-  
-}
+    /* General Section Styling */
+    #compliance-toolkit {
+      background-color: #1e1e1e;
+      padding: 60px 15px;
+    }
 
-#compliance-toolkit h2 {
-  font-size: 2.5rem;
-  color: #212529;
-  margin-bottom: 50px;
-}
+    #compliance-toolkit h2 {
+      font-size: 2.5rem;
+      color: #e0e0e0;
+      margin-bottom: 50px;
+    }
 
-/* Toolkit Item Styling */
-.toolkit-item {
-  background-color: #f5f3f3;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
+    /* Toolkit Item Styling */
+    .toolkit-item {
+      background-color: #2d2d2d;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      color: #e0e0e0;
+    }
 
-.toolkit-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
-}
+    .toolkit-item:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      transform: translateY(-5px);
+    }
 
-.toolkit-item .icon img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
+    .toolkit-item .icon img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
 
-.toolkit-item .title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin: 0 0 10px;
-  color: #333;
-}
+    .toolkit-item .title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin: 0 0 10px;
+      color: #e0e0e0;
+    }
 
-.toolkit-item .description {
-  font-size: 1rem;
-  color: #555;
-}
+    .toolkit-item .description {
+      font-size: 1rem;
+      color: #b0b0b0;
+    }
 
-@media (max-width: 767px) {
-  .toolkit-item {
-    text-align: center;
-    padding: 15px;
-  }
+    @media (max-width: 767px) {
+      .toolkit-item {
+        text-align: center;
+        padding: 15px;
+      }
 
-  .toolkit-item .icon {
-    margin-bottom: 10px;
-  }
-}
-/* General Section Styling */
-#my-account {
-  background-color: #f9f9f9;
-  padding: 60px 15px;
-}
+      .toolkit-item .icon {
+        margin-bottom: 10px;
+      }
+    }
+    /* General Section Styling */
+    #my-account {
+      background-color: #1e1e1e;
+      padding: 60px 15px;
+    }
 
-#my-account h2 {
-  font-size: 2.5rem;
-  color: #212529;
-}
+    #my-account h2 {
+      font-size: 2.5rem;
+      color: #e0e0e0;
+    }
 
-#my-account p.text-muted {
-  font-size: 1rem;
-  color: #6c757d;
-}
+    #my-account p.text-muted {
+      font-size: 1rem;
+      color: #b0b0b0;
+    }
 
-/* Account Feature Styling */
-.account-feature {
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
+    /* Account Feature Styling */
+    .account-feature {
+      background: #2d2d2d;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      color: #e0e0e0;
+    }
 
-.account-feature:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  transform: translateY(-3px);
-}
+    .account-feature:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+      transform: translateY(-3px);
+    }
 
-.account-feature .icon img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
+    .account-feature .icon img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
 
-.account-feature h5 {
-  font-size: 1.25rem;
-  color: #333;
-}
+    .account-feature h5 {
+      font-size: 1.25rem;
+      color: #e0e0e0;
+    }
 
-.account-feature p {
-  font-size: 0.95rem;
-  color: #555;
-  margin: 5px 0;
-}
+    .account-feature p {
+      font-size: 0.95rem;
+      color: #b0b0b0;
+      margin: 5px 0;
+    }
 
-.account-feature button {
-  font-size: 0.85rem;
-  font-weight: 500;
-}
+    .account-feature button {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
 
-/* General Styling */
-#legal-info {
+    /* General Styling */
+    #legal-info {
+      background-color: #1e1e1e;
+      padding: 60px 15px;
+    }
 
-  padding: 60px 15px;
-}
+    #legal-info h2 {
+      font-size: 2.5rem;
+      color: #e0e0e0;
+    }
 
-#legal-info h2 {
-  font-size: 2.5rem;
-  color: #212529;
-}
+    #legal-info p.text-muted {
+      font-size: 1rem;
+      color: #b0b0b0;
+    }
 
-#legal-info p.text-muted {
-  font-size: 1rem;
-  color: #6c757d;
-}
+    /* Legal Item Styling */
+    .legal-item {
+      background: #2d2d2d;
+      border: 1px solid #444;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #e0e0e0;
+    }
 
-/* Legal Item Styling */
-.legal-item {
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    .legal-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+    }
 
-.legal-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
+    .legal-item h5 {
+      font-size: 1.25rem;
+      color: #e0e0e0;
+      margin-bottom: 10px;
+    }
 
-.legal-item h5 {
-  font-size: 1.25rem;
-  color: #333;
-  margin-bottom: 10px;
-}
+    .legal-item p {
+      font-size: 0.95rem;
+      color: #b0b0b0;
+      margin-bottom: 15px;
+    }
 
-.legal-item p {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 15px;
-}
+    .legal-item .btn-link {
+      color: #007bff;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
 
-.legal-item .btn-link {
-  color: #007bff;
-  font-size: 0.9rem;
-  text-decoration: none;
-}
+    .legal-item .btn-link:hover {
+      text-decoration: underline;
+    }
 
-.legal-item .btn-link:hover {
-  text-decoration: underline;
-}
+    /* Footer Styling */
+    #footer {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      padding: 60px 15px;
+      background: radial-gradient(circle, rgba(182, 178, 178, 0.2) 10%, transparent 10.01%);
+            background-size: 20px 20px;
+            animation: moveDots 5s linear infinite;
+    }
 
-/* Footer Styling */
-#footer {
-  background-color: #212529;
-  color: #f8f9fa;
-  padding: 60px 15px;
-}
+    #footer h5 {
+      font-size: 1.25rem;
+      color: #e0e0e0;
+      margin-bottom: 15px;
+    }
 
-#footer h5 {
-  font-size: 1.25rem;
-  color: #f8f9fa;
-  margin-bottom: 15px;
-}
+    #footer p {
+      font-size: 0.95rem;
+      color: #b0b0b0;
+    }
 
-#footer p {
-  font-size: 0.95rem;
-  color: #adb5bd;
-}
+    #footer ul {
+      padding: 0;
+      list-style-type: none;
+    }
 
-#footer ul {
-  padding: 0;
-  list-style-type: none;
-}
+    #footer ul li {
+      margin-bottom: 10px;
+    }
 
-#footer ul li {
-  margin-bottom: 10px;
-}
+    #footer a {
+      color: #e0e0e0;
+      text-decoration: none;
+    }
 
-#footer a {
-  color: #f8f9fa;
-  text-decoration: none;
-}
+    #footer a:hover {
+      color: #00aaff;
+      text-decoration: underline;
+    }
 
-#footer a:hover {
-  color: #00aaff;
-  text-decoration: underline;
-}
+    /* Social Icons Styling */
+    .social-icons a {
+      font-size: 1.25rem;
+      transition: color 0.3s ease;
+    }
 
-/* Social Icons Styling */
-.social-icons a {
-  font-size: 1.25rem;
-  transition: color 0.3s ease;
-}
+    .social-icons a:hover {
+      color: #00aaff;
+    }
 
-.social-icons a:hover {
-  color: #00aaff;
-}
+    hr {
+      border-top: 1px solid #444;
+    }
+    /* Card hover effect */
+    #bulletin-board .card {
+      transition: transform 0.8s ease, box-shadow 0.8s ease;
+    }
 
-hr {
-  border-top: 1px solid #495057;
-}
-/* Card hover effect */
-#bulletin-board .card {
-  transition: transform 0.8s ease, box-shadow 0.8s ease;
-}
+    #bulletin-board .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    }
 
-#bulletin-board .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Initial state for scroll-in animation */
-#bulletin-board .card {
-  opacity: 0;
-  transform: translateY(20px);
-}
+    /* Initial state for scroll-in animation */
+    #bulletin-board .card {
+      opacity: 0;
+      transform: translateY(20px);
+    }
   </style>
 </head>
 <body>
   <!-- Header Section -->
-  <header>
-    <nav class="sticky-nav navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <!-- Logo -->
-        <a class="navbar-brand logo" href="#">MYD80</a>
-        <!-- Navbar Toggle Button (for mobile view) -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Navbar Menu -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#bulletin-board">Bulletin Board</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#compliance-toolkit">Compliance Toolkit</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#my-account">My Account</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#legal-info">Legal Information</a>
-            </li>
-          </ul>
-        </div>
+<header>
+  <nav class="sticky-nav navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand logo text-light" href="#">MYD80</a>
+      <!-- Navbar Toggle Button (for mobile view) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Navbar Menu -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#bulletin-board">Bulletin Board</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#compliance-toolkit">Compliance Toolkit</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#my-account">My Account</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#legal-info">Legal Information</a>
+          </li>
+        </ul>
       </div>
-    </nav>
-  </header>
+    </div>
+  </nav>
+</header>
+
 
   <section class="hero">
     <div class="hero-content">
@@ -394,202 +431,187 @@ hr {
         <a href="#compliance-toolkit" class="btn btn-outline-light">Compliance Toolkit</a>
       </div>
     </div>
+    <div id="three-canvas"></div>
   </section>
 
-  <!-- Bulletin Board Section -->
-<section id="bulletin-board" class="section bg-light">
-    <div class="container">
-      <h2 class="text-center mb-4">Bulletin Board</h2>
-      <div class="row">
-        <!-- Bulletin Item 1 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="M Test">
-            <div class="card-body">
-              <h5 class="card-title">M Test</h5>
-              <p class="card-text">Details about the M Test bulletin item. This could be a detailed description or a brief overview of the item.</p>
-            </div>
+<!-- Bulletin Board Section -->
+<section id="bulletin-board" class="container py-5">
+  <h2 class="text-center mb-4">Bulletin Board</h2>
+  <div class="row">
+      <!-- Bulletin Items -->
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg" class="card-img-top" alt="M Test">
+              <div class="card-body">
+                  <h5 class="card-title">M Test</h5>
+                  <p class="card-text">Details about the M Test bulletin item. This could be a detailed description or a brief overview of the item.</p>
+              </div>
           </div>
-        </div>
-  
-        <!-- Bulletin Item 2 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="N Test">
-            <div class="card-body">
-              <h5 class="card-title">N Test</h5>
-              <p class="card-text">Details about the N Test bulletin item. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 3 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="A Bulletin Board 1">
-            <div class="card-body">
-              <h5 class="card-title">A Bulletin Board 1</h5>
-              <p class="card-text">Details about the A Bulletin Board 1 item. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 4 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="ACTR Special District Taxonomies Report">
-            <div class="card-body">
-              <h5 class="card-title">ACTR Special District Taxonomies Report</h5>
-              <p class="card-text">Details about the ACTR Special District Taxonomies Report. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 5 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="Kutak Rock Client Alert">
-            <div class="card-body">
-              <h5 class="card-title">Kutak Rock Client Alert</h5>
-              <p class="card-text">Details about the Kutak Rock Client Alert. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 6 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="SEC Action on Disclosure">
-            <div class="card-body">
-              <h5 class="card-title">SEC Action on Disclosure</h5>
-              <p class="card-text">Details about the SEC action on Disclosure. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 7 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="NFMA White Paper on CYBER Event Disclosures">
-            <div class="card-body">
-              <h5 class="card-title">NFMA White Paper on CYBER Event Disclosures</h5>
-              <p class="card-text">Details about the NFMA white paper on CYBER event disclosures. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 8 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="Thoughts and Considerations in the Time of COVID-19">
-            <div class="card-body">
-              <h5 class="card-title">Thoughts and Considerations in the Time of COVID-19</h5>
-              <p class="card-text">Details about thoughts and considerations during COVID-19. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 9 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="Voluntary Disclosure Template with Disclaimer Language">
-            <div class="card-body">
-              <h5 class="card-title">Voluntary Disclosure Template with Disclaimer Language</h5>
-              <p class="card-text">Details about the voluntary disclosure template. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 10 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="The Importance of Disclosure for our Municipal Markets">
-            <div class="card-body">
-              <h5 class="card-title">The Importance of Disclosure for our Municipal Markets</h5>
-              <p class="card-text">Details about the importance of disclosure for municipal markets. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 11 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="GASB Proposes to Postpone Effective Dates of Certain Pronouncements">
-            <div class="card-body">
-              <h5 class="card-title">GASB Proposes to Postpone Effective Dates of Certain Pronouncements</h5>
-              <p class="card-text">Details about GASB's proposal to postpone effective dates. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 12 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="COVID-19 Illustrative Disclosures">
-            <div class="card-body">
-              <h5 class="card-title">COVID-19 Illustrative Disclosures</h5>
-              <p class="card-text">Details about COVID-19 illustrative disclosures. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 13 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="SEC Staff Guidance Regarding Secondary Market Disclosure">
-            <div class="card-body">
-              <h5 class="card-title">SEC Staff Guidance Regarding Secondary Market Disclosure</h5>
-              <p class="card-text">Details about SEC staff guidance on secondary market disclosure. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 14 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="SEC to Municipal Issuers and Obligated Persons Alert">
-            <div class="card-body">
-              <h5 class="card-title">SEC to Municipal Issuers and Obligated Persons Alert</h5>
-              <p class="card-text">Details about the SEC alert to municipal issuers and obligated persons. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 15 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="Application of Antifraud Provisions to Public Statements of Issuers and Obligated Persons of Municipal Securities in the Secondary Market">
-            <div class="card-body">
-              <h5 class="card-title">Application of Antifraud Provisions to Public Statements of Issuers and Obligated Persons of Municipal Securities in the Secondary Market</h5>
-              <p class="card-text">Details about the application of antifraud provisions. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 16 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="SEC Proposes New Guidance on Role of Municipal Advisers in Private Placements">
-            <div class="card-body">
-              <h5 class="card-title">SEC Proposes New Guidance on Role of Municipal Advisers in Private Placements</h5>
-              <p class="card-text">Details about the SEC's proposed guidance on municipal advisers. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Bulletin Item 17 -->
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" class="card-img-top" alt="GREEN BONDS">
-            <div class="card-body">
-              <h5 class="card-title">GREEN BONDS</h5>
-              <p class="card-text">Details about green bonds. This could be a detailed description or a brief overview of the item.</p>
-            </div>
-          </div>
-        </div>
       </div>
-    </div>
-  </section>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg" class="card-img-top" alt="N Test">
+              <div class="card-body">
+                  <h5 class="card-title">N Test</h5>
+                  <p class="card-text">Details about the N Test bulletin item. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg" class="card-img-top" alt="A Bulletin Board 1">
+              <div class="card-body">
+                  <h5 class="card-title">A Bulletin Board 1</h5>
+                  <p class="card-text">Details about the A Bulletin Board 1 item. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184632/pexels-photo-3184632.jpeg" class="card-img-top" alt="ACTR Special District Taxonomies Report">
+              <div class="card-body">
+                  <h5 class="card-title">ACTR Special District Taxonomies Report</h5>
+                  <p class="card-text">Details about the ACTR Special District Taxonomies Report. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg" class="card-img-top" alt="Kutak Rock Client Alert">
+              <div class="card-body">
+                  <h5 class="card-title">Kutak Rock Client Alert</h5>
+                  <p class="card-text">Details about the Kutak Rock Client Alert. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3182835/pexels-photo-3182835.jpeg" class="card-img-top" alt="SEC Action on Disclosure">
+              <div class="card-body">
+                  <h5 class="card-title">SEC Action on Disclosure</h5>
+                  <p class="card-text">Details about the SEC action on Disclosure. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg" class="card-img-top" alt="NFMA White Paper on CYBER Event Disclosures">
+              <div class="card-body">
+                  <h5 class="card-title">NFMA White Paper on CYBER Event Disclosures</h5>
+                  <p class="card-text">Details about the NFMA white paper on CYBER event disclosures. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184297/pexels-photo-3184297.jpeg" class="card-img-top" alt="Thoughts and Considerations in the Time of COVID-19">
+              <div class="card-body">
+                  <h5 class="card-title">Thoughts and Considerations in the Time of COVID-19</h5>
+                  <p class="card-text">Details about thoughts and considerations during COVID-19. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg" class="card-img-top" alt="Voluntary Disclosure Template with Disclaimer Language">
+              <div class="card-body">
+                  <h5 class="card-title">Voluntary Disclosure Template with Disclaimer Language</h5>
+                  <p class="card-text">Details about the voluntary disclosure template. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184324/pexels-photo-3184324.jpeg" class="card-img-top" alt="The Importance of Disclosure for our Municipal Markets">
+              <div class="card-body">
+                  <h5 class="card-title">The Importance of Disclosure for our Municipal Markets</h5>
+                  <p class="card-text">Details about the importance of disclosure for municipal markets. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184294/pexels-photo-3184294.jpeg" class="card-img-top" alt="GASB Proposes to Postpone Effective Dates of Certain Pronouncements">
+              <div class="card-body">
+                  <h5 class="card-title">GASB Proposes to Postpone Effective Dates of Certain Pronouncements</h5>
+                  <p class="card-text">Details about GASB's proposal to postpone effective dates. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184410/pexels-photo-3184410.jpeg" class="card-img-top" alt="COVID-19 Illustrative Disclosures">
+              <div class="card-body">
+                  <h5 class="card-title">COVID-19 Illustrative Disclosures</h5>
+                  <p class="card-text">Details about COVID-19 illustrative disclosures. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184633/pexels-photo-3184633.jpeg" class="card-img-top" alt="SEC Staff Guidance Regarding Secondary Market Disclosure">
+              <div class="card-body">
+                  <h5 class="card-title">SEC Staff Guidance Regarding Secondary Market Disclosure</h5>
+                  <p class="card-text">Details about SEC staff guidance on secondary market disclosure. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg" class="card-img-top" alt="SEC to Municipal Issuers and Obligated Persons Alert">
+              <div class="card-body">
+                  <h5 class="card-title">SEC to Municipal Issuers and Obligated Persons Alert</h5>
+                  <p class="card-text">Details about the SEC alert to municipal issuers and obligated persons. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184321/pexels-photo-3184321.jpeg" class="card-img-top" alt="Application of Antifraud Provisions to Public Statements of Issuers and Obligated Persons of Municipal Securities in the Secondary Market">
+              <div class="card-body">
+                  <h5 class="card-title">Application of Antifraud Provisions to Public Statements of Issuers and Obligated Persons of Municipal Securities in the Secondary Market</h5>
+                  <p class="card-text">Details about the application of antifraud provisions. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184373/pexels-photo-3184373.jpeg" class="card-img-top" alt="SEC Proposes New Guidance on Role of Municipal Advisers in Private Placements">
+              <div class="card-body">
+                  <h5 class="card-title">SEC Proposes New Guidance on Role of Municipal Advisers in Private Placements</h5>
+                  <p class="card-text">Details about the SEC's proposed guidance on municipal advisers. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+              <img src="https://images.pexels.com/photos/3184643/pexels-photo-3184643.jpeg" class="card-img-top" alt="GREEN BONDS">
+              <div class="card-body">
+                  <h5 class="card-title">GREEN BONDS</h5>
+                  <p class="card-text">Details about green bonds. This could be a detailed description or a brief overview of the item.</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+        
+
 
   <section id="compliance-toolkit" class="container py-5">
     <h2 class="text-center mb-5">Compliance Toolkit</h2>
@@ -598,7 +620,7 @@ hr {
       <div class="col-md-6 mb-4">
         <div class="toolkit-item d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 1">
+            <img src="https://cdn-icons-png.flaticon.com/128/1265/1265775.png" alt="Toolkit Icon 1">
           </div>
           <div>
             <h5 class="title">View Compliance Toolkit</h5>
@@ -609,7 +631,7 @@ hr {
       <div class="col-md-6 mb-4">
         <div class="toolkit-item d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 2">
+            <img src="https://cdn-icons-png.flaticon.com/128/64/64572.png" alt="Toolkit Icon 2">
           </div>
           <div>
             <h5 class="title">View My Account</h5>
@@ -620,7 +642,7 @@ hr {
       <div class="col-md-6 mb-4">
         <div class="toolkit-item d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 3">
+            <img src="https://cdn-icons-png.flaticon.com/128/2258/2258853.png" alt="Toolkit Icon 3">
           </div>
           <div>
             <h5 class="title">File a Document</h5>
@@ -631,7 +653,7 @@ hr {
       <div class="col-md-6 mb-4">
         <div class="toolkit-item d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 4">
+            <img src="https://cdn-icons-png.flaticon.com/128/1665/1665652.png" alt="Toolkit Icon 4">
           </div>
           <div>
             <h5 class="title">View Document History</h5>
@@ -642,7 +664,7 @@ hr {
       <div class="col-md-6 mb-4">
         <div class="toolkit-item d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 5">
+            <img src="https://cdn-icons-png.flaticon.com/128/1456/1456888.png" alt="Toolkit Icon 5">
           </div>
           <div>
             <h5 class="title">View Policies & Procedures</h5>
@@ -653,7 +675,7 @@ hr {
       <div class="col-md-6 mb-4">
         <div class="toolkit-item d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 6">
+            <img src="https://cdn-icons-png.flaticon.com/128/171/171322.png" alt="Toolkit Icon 6">
           </div>
           <div>
             <h5 class="title">Continuing Education</h5>
@@ -664,7 +686,7 @@ hr {
       <div class="col-md-6 mb-4">
         <div class="toolkit-item d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Toolkit Icon 7">
+            <img src="https://cdn-icons-png.flaticon.com/128/149/149852.png" alt="Toolkit Icon 7">
           </div>
           <div>
             <h5 class="title">Search System</h5>
@@ -684,7 +706,7 @@ hr {
       <div class="col-md-6">
         <div class="account-feature d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Profile Icon">
+            <img src="https://cdn-icons-png.flaticon.com/128/64/64572.png" alt="Profile Icon">
           </div>
           <div>
             <h5>Profile Information</h5>
@@ -696,7 +718,7 @@ hr {
       <div class="col-md-6">
         <div class="account-feature d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Password Icon">
+            <img src="https://cdn-icons-png.flaticon.com/128/3064/3064155.png" alt="Password Icon">
           </div>
           <div>
             <h5>Change Password</h5>
@@ -708,7 +730,7 @@ hr {
       <div class="col-md-6">
         <div class="account-feature d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Notification Icon">
+            <img src="https://cdn-icons-png.flaticon.com/128/2645/2645890.png" alt="Notification Icon">
           </div>
           <div>
             <h5>Notification Preferences</h5>
@@ -720,7 +742,7 @@ hr {
       <div class="col-md-6">
         <div class="account-feature d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Billing Icon">
+            <img src="https://cdn-icons-png.flaticon.com/128/1611/1611318.png" alt="Billing Icon">
           </div>
           <div>
             <h5>Billing & Subscriptions</h5>
@@ -732,7 +754,7 @@ hr {
       <div class="col-md-6">
         <div class="account-feature d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="History Icon">
+            <img src="https://cdn-icons-png.flaticon.com/128/1665/1665652.png" alt="History Icon">
           </div>
           <div>
             <h5>Document History</h5>
@@ -744,7 +766,7 @@ hr {
       <div class="col-md-6">
         <div class="account-feature d-flex align-items-center">
           <div class="icon me-4">
-            <img src="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydGZvbGlvfGVufDB8fDB8fHww" alt="Security Icon">
+            <img src="https://cdn-icons-png.flaticon.com/128/2040/2040504.png" alt="Security Icon">
           </div>
           <div>
             <h5>Security Settings</h5>
@@ -927,5 +949,59 @@ hr {
 });
 
   </script>
+
+<script type="module">
+  import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
+
+  // Scene, Camera, Renderer
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0a0a); // Dark background
+
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer();
+  const canvasContainer = document.getElementById('three-canvas');
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  canvasContainer.appendChild(renderer.domElement);
+
+  // Create a star field
+  const starGeometry = new THREE.BufferGeometry();
+  const starCount = 1000;
+  const starPositions = new Float32Array(starCount * 3);
+
+  for (let i = 0; i < starCount * 3; i++) {
+    starPositions[i] = (Math.random() - 0.5) * 50; // Random position
+  }
+
+  starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+  const starMaterial = new THREE.PointsMaterial({
+    color: 0xffffff,
+    size: 0.1,
+  });
+
+  const stars = new THREE.Points(starGeometry, starMaterial);
+  scene.add(stars);
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate stars for a dynamic effect
+    stars.rotation.y += 0.001;
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  // Handle window resizing
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+</script>
+
 </body>
 </html>
